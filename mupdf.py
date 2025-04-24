@@ -10,7 +10,7 @@ import io
 
 def process_page(pdf_path, page_num, output_dir, dpi=300, img_format="webp", quality=80):
     """Process a single PDF page and save as image using PIL"""
-    page_start_time = time.time()
+    page_start_time = time.perf_counter()
 
     # Set DPI
     zoom_x = dpi / 72
@@ -60,7 +60,7 @@ def process_page(pdf_path, page_num, output_dir, dpi=300, img_format="webp", qua
     # Close the document
     doc.close()
 
-    page_end_time = time.time()
+    page_end_time = time.perf_counter()
     page_duration = page_end_time - page_start_time
 
     return page_num, page_duration
@@ -91,7 +91,7 @@ def pdf_to_jpeg(pdf_path, output_dir="output_mupdf", dpi=300, parallel=False, ma
     print(f"PyMuPDF: Converting PDF with {page_count} pages" + f" using {'parallel' if parallel else 'sequential'} processing...")
 
     # Start total time measurement
-    total_start_time = time.time()
+    total_start_time = time.perf_counter()
 
     if parallel:
         # Process pages in parallel
@@ -110,7 +110,7 @@ def pdf_to_jpeg(pdf_path, output_dir="output_mupdf", dpi=300, parallel=False, ma
             print(f"PyMuPDF: Page {page_num + 1}/{page_count} conversion took {page_duration:.2f} seconds")
 
     # End total time measurement
-    total_end_time = time.time()
+    total_end_time = time.perf_counter()
     total_duration = total_end_time - total_start_time
 
     print(f"PyMuPDF: Total conversion time: {total_duration:.2f} seconds")
